@@ -2453,6 +2453,16 @@
    "HasResource": true,
    "StringPrefix": "cur"
   },
+  "AWS Customer Verification Service": {
+   "Actions": [
+    "CreateCustomerVerificationDetails",
+    "GetCustomerVerificationDetails",
+    "GetCustomerVerificationEligibility",
+    "UpdateCustomerVerificationDetails"
+   ],
+   "HasResource": false,
+   "StringPrefix": "customer-verification"
+  },
   "AWS Data Exchange": {
    "ARNFormat": "arn:aws:dataexchange:${Region}:${Account}:${ResourceType}/${ResourceId}",
    "ARNRegex": "^arn:aws:dataexchange:.+",
@@ -6367,7 +6377,7 @@
    "StringPrefix": "aws-marketplace"
   },
   "AWS Marketplace Seller Reporting": {
-   "ARNFormat": "arn:aws:aws-marketplace::${Account}:${Catalog}/${ResourceType}/${ResourceId}",
+   "ARNFormat": "arn:aws:aws-marketplace::${Account}:${Catalog}/${ResourceType}/${ResourcePath}",
    "ARNRegex": "^arn:aws:aws-marketplace:.+",
    "Actions": [
     "GetSellerDashboard"
@@ -6968,7 +6978,12 @@
     "UpdateSiteRackPhysicalProperties"
    ],
    "HasResource": true,
-   "StringPrefix": "outposts"
+   "StringPrefix": "outposts",
+   "conditionKeys": [
+    "aws:RequestTag/${TagKey}",
+    "aws:ResourceTag/${TagKey}",
+    "aws:TagKeys"
+   ]
   },
   "AWS Panorama": {
    "ARNFormat": "arn:aws:panorama:${Region}:${Account}:${ResourceType}/${ResourceName}",
@@ -8118,6 +8133,7 @@
    "ARNFormat": "arn:aws:simspaceweaver:${Region}:${Account}:${ResourceType}/${ResourceId}",
    "ARNRegex": "^arn:aws:simspaceweaver:.+:.+:.+",
    "Actions": [
+    "CreateSnapshot",
     "DeleteApp",
     "DeleteSimulation",
     "DescribeApp",
@@ -8420,6 +8436,7 @@
    "ARNFormat": "^arn:${Partition}:supportplans::${Account}:${ResourceType}/${ResourcePath}",
    "ARNRegex": "^arn:${Partition}:supportplans::.+:.+",
    "Actions": [
+    "CreateSupportPlanSchedule",
     "GetSupportPlan",
     "GetSupportPlanUpdateStatus",
     "StartSupportPlanUpdate"
@@ -9004,6 +9021,13 @@
     "aws:ResourceTag/${TagKey}",
     "aws:TagKeys"
    ]
+  },
+  "AWS Verified Access": {
+   "Actions": [
+    "AllowVerifiedAccess"
+   ],
+   "HasResource": false,
+   "StringPrefix": "verified-access"
   },
   "AWS WAF": {
    "ARNFormat": "arn:aws:waf::${Account}:${ResourceId}/${Id}",
@@ -10852,19 +10876,20 @@
    ]
   },
   "Amazon CodeGuru Security": {
-   "ARNFormat": "arn:${Partition}:codeguru-security:${Region}:${Account}:*",
-   "ARNRegex": "^arn:${Partition}:codeguru-security:.+:.+:.+",
+   "ARNFormat": "arn:aws:codeguru-security:${Region}:${Account}:*",
+   "ARNRegex": "^arn:aws:codeguru-security:.+:.+:.+",
    "Actions": [
     "BatchGetFindings",
     "CreateScan",
     "CreateUploadUrl",
     "DeleteScansByCategory",
+    "GetFindings",
     "GetScan",
     "ListFindings",
     "ListScans",
     "UpdateAccountConfiguration"
    ],
-   "HasResource": false,
+   "HasResource": true,
    "StringPrefix": "codeguru-security"
   },
   "Amazon CodeWhisperer": {
@@ -11406,8 +11431,7 @@
     "UpdateUserIdentityInfo",
     "UpdateUserPhoneConfig",
     "UpdateUserRoutingProfile",
-    "UpdateUserSecurityProfiles",
-    "UpdatedescribeContent"
+    "UpdateUserSecurityProfiles"
    ],
    "HasResource": true,
    "StringPrefix": "connect",
@@ -12860,6 +12884,7 @@
     "DescribeJobTemplate",
     "DescribeManagedEndpoint",
     "DescribeVirtualCluster",
+    "GetManagedEndpointSessionCredentials",
     "ListJobRuns",
     "ListJobTemplates",
     "ListManagedEndpoints",
@@ -14294,6 +14319,7 @@
     "ListMembers",
     "ListTagsForResource",
     "ListUsageTotals",
+    "SearchVulnerabilities",
     "TagResource",
     "UntagResource",
     "UpdateConfiguration",
@@ -15245,6 +15271,7 @@
    "Actions": [
     "CreateBroker",
     "CreateConfiguration",
+    "CreateReplicaBroker",
     "CreateTags",
     "CreateUser",
     "DeleteBroker",
@@ -15679,6 +15706,7 @@
    "ARNRegex": "^arn:aws:memorydb:.+:.+:.+",
    "Actions": [
     "BatchUpdateCluster",
+    "Connect",
     "CopySnapshot",
     "CreateAcl",
     "CreateCluster",
@@ -16589,6 +16617,8 @@
     "CreateTemplateAlias",
     "CreateTheme",
     "CreateThemeAlias",
+    "CreateTopic",
+    "CreateTopicRefreshSchedule",
     "CreateUser",
     "CreateVPCConnection",
     "DeleteAccountCustomization",
@@ -16611,6 +16641,8 @@
     "DeleteTemplateAlias",
     "DeleteTheme",
     "DeleteThemeAlias",
+    "DeleteTopic",
+    "DeleteTopicRefreshSchedule",
     "DeleteUser",
     "DeleteUserByPrincipalId",
     "DeleteVPCConnection",
@@ -16644,6 +16676,10 @@
     "DescribeTheme",
     "DescribeThemeAlias",
     "DescribeThemePermissions",
+    "DescribeTopic",
+    "DescribeTopicPermissions",
+    "DescribeTopicRefresh",
+    "DescribeTopicRefreshSchedule",
     "DescribeUser",
     "DescribeVPCConnection",
     "GenerateEmbedUrlForAnonymousUser",
@@ -16675,6 +16711,8 @@
     "ListThemeAliases",
     "ListThemeVersions",
     "ListThemes",
+    "ListTopicRefreshSchedules",
+    "ListTopics",
     "ListUserGroups",
     "ListUsers",
     "ListVPCConnections",
@@ -16723,6 +16761,9 @@
     "UpdateTheme",
     "UpdateThemeAlias",
     "UpdateThemePermissions",
+    "UpdateTopic",
+    "UpdateTopicPermissions",
+    "UpdateTopicRefreshSchedule",
     "UpdateUser",
     "UpdateVPCConnection"
    ],
@@ -18857,6 +18898,7 @@
     "StartAwsBackupJob",
     "StartAwsRestoreJob",
     "TagResource",
+    "Unload",
     "UntagResource",
     "UpdateDatabase",
     "UpdateScheduledQuery",
